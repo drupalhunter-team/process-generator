@@ -4,6 +4,8 @@
 
 // Start pid from 
 int init_pid = 0;
+// Number of processes required
+int numProcessesRequired;
 
 typedef struct process {
    int processId;
@@ -23,7 +25,17 @@ int getMemFootprint() {
 	return rand() % 100 + 1;
 }
 
-void createProcesses(int numProcessesRequired) {
+void printProcesses(process *pArray) {
+
+	int i;
+
+	for (i = 0; i < numProcessesRequired; i++) {
+		printf("%d. PID: %d\tCPU Cycles: %d\tMemory footprint: %d\n", i, pArray[i].processId, pArray[i].cpuCycles, pArray[i].memFootprint);
+	}
+
+}
+
+void createProcesses() {
 
 	int i;
 	process p[numProcessesRequired];
@@ -35,6 +47,8 @@ void createProcesses(int numProcessesRequired) {
 		printf("%d\n", p[i].memFootprint);
 	} 
 
+	printProcesses(p);
+
 }
 
 int main(int argc, char **argv) { 
@@ -45,7 +59,9 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    createProcesses(atoi(argv[1]));
+    numProcessesRequired = atoi(argv[1]);
+
+    createProcesses();
 
     return 0;
 
