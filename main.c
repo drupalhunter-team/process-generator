@@ -12,6 +12,8 @@ typedef struct process {
 int init_pid = 0;
 // Number of processes required
 int numProcessesRequired;
+// Where all processes will be stored
+process* pArray;
 
 int getProcessID() {
 	return init_pid++;
@@ -25,8 +27,14 @@ int getMemFootprint() {
 	return rand() % 100 + 1;
 }
 
-void printProcess(process p) {
-	printf("PID: %d\tCPU Cycles: %d\tMemory footprint: %d\n", p.processId, p.cpuCycles, p.memFootprint);
+void printAllProcesses(process* p) {
+
+	int i;
+
+	for (i = 0; i < numProcessesRequired; i++) {
+		printf("PID: %d\tCPU Cycles: %d\tMemory footprint: %d\n", p[i].processId, p[i].cpuCycles, p[i].memFootprint);
+	}
+	
 }
 
 process createProcess() {
@@ -43,10 +51,12 @@ process createProcess() {
 
 void createAllProcesses() {
 	
+	// Define the size of process array
+	pArray = (process *)malloc((numProcessesRequired)*sizeof(process));
 	int i;
 
 	for(i = 0; i < numProcessesRequired; i++) {
-		printProcess(createProcess());
+		pArray[i] = createProcess();
 	}
 
 }
@@ -64,6 +74,7 @@ int main(int argc, char **argv) {
     numProcessesRequired = atoi(argv[1]);
 
     createAllProcesses();
+    printAllProcesses(pArray);
 
     return 0;
 
