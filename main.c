@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Start pid from 
-int init_pid = 0;
-// Number of processes required
-int numProcessesRequired;
-
 typedef struct process {
    int processId;
    int cpuCycles;
    int memFootprint;
 }process;
+
+// Start pid from 
+int init_pid = 0;
+// Number of processes required
+int numProcessesRequired;
 
 int getProcessID() {
 	return init_pid++;
@@ -25,29 +25,29 @@ int getMemFootprint() {
 	return rand() % 100 + 1;
 }
 
-void printProcesses(process *pArray) {
+void printProcess(process p) {
+	printf("PID: %d\tCPU Cycles: %d\tMemory footprint: %d\n", p.processId, p.cpuCycles, p.memFootprint);
+}
 
-	int i;
+process createProcess() {
 
-	for (i = 0; i < numProcessesRequired; i++) {
-		printf("%d. PID: %d\tCPU Cycles: %d\tMemory footprint: %d\n", i, pArray[i].processId, pArray[i].cpuCycles, pArray[i].memFootprint);
-	}
+	process p;
+
+	p.processId = getProcessID();
+	p.cpuCycles = getCpuCycle();
+	p.memFootprint = getMemFootprint();
+
+	return p;
 
 }
 
-void createProcesses() {
-
+void createAllProcesses() {
+	
 	int i;
-	process p[numProcessesRequired];
 
-	for (i = 0; i < numProcessesRequired; i++) {
-		p[i].processId = getProcessID();
-		p[i].cpuCycles = getCpuCycle();
-		p[i].memFootprint = getMemFootprint();
-		printf("%d\n", p[i].memFootprint);
-	} 
-
-	printProcesses(p);
+	for(i = 0; i < numProcessesRequired; i++) {
+		printProcess(createProcess());
+	}
 
 }
 
@@ -59,9 +59,11 @@ int main(int argc, char **argv) {
         return -1;
     }
 
+    if (argv[2]) init_pid = atoi(argv[2]);
+
     numProcessesRequired = atoi(argv[1]);
 
-    createProcesses();
+    createAllProcesses();
 
     return 0;
 
