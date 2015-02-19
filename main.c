@@ -1,16 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Start pid from 
 int init_pid = 0;
 
-struct process {
+typedef struct process {
    int processId;
    int cpuCycles;
    int memFootprint;
-};
+}process;
+
+int getProcessID() {
+	return init_pid++;
+}
+
+int getCpuCycle() {
+    return rand() % 11000 + 1000;
+}
+
+int getMemFootprint() {
+	return rand() % 100 + 1;
+}
 
 void createProcesses(int numProcessesRequired) {
+
+	int i;
+	process p[numProcessesRequired];
+
+	for (i = 0; i < numProcessesRequired; i++) {
+		p[i].processId = getProcessID();
+		p[i].cpuCycles = getCpuCycle();
+		p[i].memFootprint = getMemFootprint();
+		printf("%d\n", p[i].memFootprint);
+	} 
 
 }
 
