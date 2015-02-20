@@ -12,7 +12,7 @@ The required number of cycles is chosen from the interval <1,000, 11,000> with a
 ## Usage
 This program accepts couple of parameters. See below for more info.
 ##### Compile:
-`$ gcc main.c`
+`$ g++ main.cpp -std=c++0x`
 
 ##### Execute:
 `$ ./a.out [1] [2]`
