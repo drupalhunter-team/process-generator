@@ -18,6 +18,6 @@ This program accepts couple of parameters. See below for more info.
 `$ ./a.out [1] [2]`
 
 `[1]` - Number of processes you need to create <br>
-`[2]` - Start PIDs with a predefined value
+`[2]` - Start PIDs with a predefined value (optional)
 
 
