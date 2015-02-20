@@ -33,7 +33,7 @@ int init_pid = 0;
 // Number of processes required
 int numProcessesRequired;
 // Where all processes will be stored
-process* pArray = new process;
+process* pArray;
 
 Generator randCycle(6000.0, 2000.0, 1000.0, 11000.0);
 Generator randMemFootprint(20.0, 10.0, 1.0, 100.0);
@@ -79,6 +79,8 @@ int main(int argc, char **argv) {
     if (argv[2]) init_pid = atoi(argv[2]);
 
     numProcessesRequired = atoi(argv[1]);
+
+    pArray = new process[numProcessesRequired];
 
     createAllProcesses();
     printAllProcesses(pArray);
