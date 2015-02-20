@@ -1,19 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <iostream>
+#include <random>
 
-typedef struct process {
+using namespace std;
+
+struct process {
    int processId;
    int cpuCycles;
    int memFootprint;
-}process;
+};
 
 // Start pid from 
 int init_pid = 0;
 // Number of processes required
 int numProcessesRequired;
 // Where all processes will be stored
-process* pArray;
+process* pArray = new process;
 
 int getProcessID() {
 	return init_pid++;
@@ -32,7 +33,7 @@ void printAllProcesses(process* p) {
 	int i;
 
 	for (i = 0; i < numProcessesRequired; i++) {
-		printf("PID: %d\tCPU Cycles: %d\tMemory footprint: %d\n", p[i].processId, p[i].cpuCycles, p[i].memFootprint);
+		cout << "PID: " << p[i].processId << "\t\t CPU cyles: " << p[i].cpuCycles << "\t\t Memory footprint:" << p[i].memFootprint << endl;
 	}
 	
 }
@@ -50,9 +51,7 @@ process createProcess() {
 }
 
 void createAllProcesses() {
-	
-	// Define the size of process array
-	pArray = (process *)malloc((numProcessesRequired)*sizeof(process));
+
 	int i;
 
 	for(i = 0; i < numProcessesRequired; i++) {
@@ -65,7 +64,7 @@ int main(int argc, char **argv) {
 
 	// Error handling 
 	if (argc < 2) {
-        fprintf(stderr, "Error!\nUsage: %s [REQUIRED: number of processes] [OPTIONAL: start pid from]\n", argv[0]);
+        cout << "Error!" << "\nUsage: " << argv[0] << " [REQUIRED: number of processes] [OPTIONAL: start pid from]\n" << endl;
         return -1;
     }
 
@@ -75,6 +74,9 @@ int main(int argc, char **argv) {
 
     createAllProcesses();
     printAllProcesses(pArray);
+
+    // Cleanup
+    delete pArray;
 
     return 0;
 
