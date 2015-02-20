@@ -29,10 +29,8 @@ int getMemFootprint() {
 }
 
 void printAllProcesses(process* p) {
-
-	int i;
-
-	for (i = 0; i < numProcessesRequired; i++) {
+	
+	for (int i = 0; i < numProcessesRequired; i++) {
 		cout << "PID: " << p[i].processId << "\t\t CPU cyles: " << p[i].cpuCycles << "\t\t Memory footprint:" << p[i].memFootprint << endl;
 	}
 	
@@ -52,9 +50,7 @@ process createProcess() {
 
 void createAllProcesses() {
 
-	int i;
-
-	for(i = 0; i < numProcessesRequired; i++) {
+	for(int i = 0; i < numProcessesRequired; i++) {
 		pArray[i] = createProcess();
 	}
 
