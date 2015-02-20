@@ -3,6 +3,25 @@
 
 using namespace std;
 
+class Generator {
+    default_random_engine generator;
+    normal_distribution<double> distribution;
+    double min;
+    double max;
+public:
+    Generator(double mean, double stddev, double min, double max):
+        distribution(mean, stddev), min(min), max(max)
+    {}
+
+    double operator ()() {
+        while (true) {
+            double number = this->distribution(generator);
+            if (number >= this->min && number <= this->max)
+                return number;
+        }
+    }
+};
+
 struct process {
    int processId;
    int cpuCycles;
@@ -16,23 +35,17 @@ int numProcessesRequired;
 // Where all processes will be stored
 process* pArray = new process;
 
+Generator randCycle(6000.0, 2000.0, 1000.0, 11000.0);
+Generator randMemFootprint(20.0, 10.0, 1.0, 100.0);
+
 int getProcessID() {
 	return init_pid++;
 }
 
-int getCpuCycle() {
-    return rand() % 11000 + 1000;
-}
-
-int getMemFootprint() {
-	return rand() % 100 + 1;
-}
-
 void printAllProcesses(process* p) {
 	
-	for (int i = 0; i < numProcessesRequired; i++) {
+	for (int i = 0; i < numProcessesRequired; i++)
 		cout << "PID: " << p[i].processId << "\t\t CPU cyles: " << p[i].cpuCycles << "\t\t Memory footprint:" << p[i].memFootprint << endl;
-	}
 	
 }
 
@@ -41,8 +54,8 @@ process createProcess() {
 	process p;
 
 	p.processId = getProcessID();
-	p.cpuCycles = getCpuCycle();
-	p.memFootprint = getMemFootprint();
+	p.cpuCycles = randCycle();
+	p.memFootprint = randMemFootprint();
 
 	return p;
 
@@ -50,10 +63,9 @@ process createProcess() {
 
 void createAllProcesses() {
 
-	for(int i = 0; i < numProcessesRequired; i++) {
+	for(int i = 0; i < numProcessesRequired; i++)
 		pArray[i] = createProcess();
-	}
-
+	
 }
 
 int main(int argc, char **argv) { 
